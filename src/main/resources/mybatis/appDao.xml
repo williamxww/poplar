@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bow.dao.AppDao">
+
+    <select id="getApp" parameterType="int" resultType="app">
+        select id,appName, comment, createTime,updateTime
+        from poplar.app
+		where id = #{id}
+	</select>
+
+    <insert id="addApp" parameterType="app" useGeneratedKeys="true" keyProperty="id">
+        insert into app
+        ( appName, comment, createTime,updateTime)
+        values
+        (
+        #{appName},
+        #{comment},
+        #{createTime,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <delete id="deleteApp" parameterType="int" databaseId="poplar">
+		delete from app where id=#{id}
+	</delete>
+
+    <update id="updateApp">
+        update app
+        <trim prefix="set" suffixOverrides=",">
+            <if test="appName != null ">appName=#{appName},</if>
+            <if test="comment != null ">comment=#{comment},</if>
+            <if test="createTime != null ">createTime=#{createTime},</if>
+            <if test="updateTime != null ">updateTime=#{updateTime},</if>
+        </trim>
+        where id=#{id}
+    </update>
+
+
+</mapper>

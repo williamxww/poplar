@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bow.dao.UserDao">
+
+    <select id="getUser" parameterType="long" resultType="user">
+        select id,organization_id, username, password,salt, role_ids, locked
+        from shiro.sys_user
+		where id = #{id}
+	</select>
+
+    <select id="getUserByName" resultType="user">
+        select id,organization_id, username, password,salt, role_ids, locked
+        from shiro.sys_user
+        where username = #{0}
+    </select>
+
+    <insert id="addUser" parameterType="user" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_user
+        ( username, password, salt, locked)
+        values
+        (
+        #{username},
+        #{password},
+        #{salt,jdbcType=VARCHAR},
+        #{locked,jdbcType=NUMERIC}
+        )
+    </insert>
+
+    <delete id="deleteUser" parameterType="long" databaseId="">
+		delete from sys_user where id=#{userId}
+	</delete>
+
+    <update id="updateUser">
+        update sys_user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="username != null ">username=#{username},</if>
+            <if test="password != null ">password=#{password},</if>
+            <if test="locked != null ">locked=#{locked},</if>
+            <if test="salt != null ">salt=#{salt},</if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <select id="getUsers" parameterType="user" resultType="user">
+        select id, username, password, salt, locked from sys_user
+        <trim prefix="where" prefixOverrides="and">
+            <if test="id != null ">and id=#{id}</if>
+            <if test="username != null ">and username=#{username}</if>
+            <if test="locked != null ">and locked=#{locked}</if>
+        </trim>
+    </select>
+
+    <insert id="addBatchUsers" parameterType="list" useGeneratedKeys="true">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+
+        insert into sys_user ( username, password, salt, locked)
+        values
+        <foreach collection="list" item="e" index="index" separator=",">
+            (
+            #{e.username,jdbcType=VARCHAR},
+            #{e.password,jdbcType=VARCHAR},
+            #{e.salt,jdbcType=NUMERIC},
+            #{e.locked,jdbcType=NUMERIC}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteBatchUsers">
+        delete from sys_user where id in
+        <foreach collection="list" item="u" index="index" open="(" separator="," close=")">
+            #{u.id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bow.dao.NamespaceDao">
+
+    <select id="getNamespace" parameterType="int" resultType="item">
+        select id,appId, namespace, format, comment, createTime,updateTime
+        from Namespace
+		where id = #{id}
+	</select>
+
+    <insert id="addNamespace" parameterType="item" useGeneratedKeys="true" keyProperty="id">
+        insert into Namespace
+        ( appId, namespace, format,comment, createTime,updateTime)
+        values
+        (
+        #{appId},
+        #{namespace},
+        #{format},
+        #{comment},
+        #{createTime,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <delete id="deleteNamespace" parameterType="int" databaseId="poplar">
+		delete from Namespace where id=#{id}
+	</delete>
+
+    <update id="updateNamespace">
+        update Namespace
+        <trim prefix="set" suffixOverrides=",">
+            <if test="appId != null ">appId=#{appId},</if>
+            <if test="namespace != null ">namespace=#{namespace},</if>
+            <if test="format != null ">format=#{format},</if>
+            <if test="comment != null ">comment=#{comment},</if>
+            <if test="createTime != null ">createTime=#{createTime},</if>
+            <if test="updateTime != null ">updateTime=#{updateTime},</if>
+        </trim>
+        where id=#{id}
+    </update>
+
+
+</mapper>

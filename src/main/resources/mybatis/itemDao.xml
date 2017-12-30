@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bow.dao.ItemDao">
+
+    <select id="getItem" parameterType="int" resultType="item">
+        select id,namespaceId, key, value, comment, createTime,updateTime
+        from item
+		where id = #{id}
+	</select>
+
+    <select id="getItems" parameterType="int" resultType="item">
+        select id,namespaceId, key, value, comment, createTime,updateTime
+        from item
+        where namespaceId = #{namespaceId}
+    </select>
+
+
+    <insert id="addItem" parameterType="item" useGeneratedKeys="true" keyProperty="id">
+        insert into item
+        ( namespaceId, key, value, createTime,updateTime)
+        values
+        (
+        #{namespaceId},
+        #{key},
+        #{value},
+        #{createTime,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <delete id="deleteItem" parameterType="int" databaseId="poplar">
+		delete from Item where id=#{id}
+	</delete>
+
+    <update id="updateItem">
+        update Item
+        <trim prefix="set" suffixOverrides=",">
+            <if test="namespaceId != null ">namespaceId=#{namespaceId},</if>
+            <if test="key != null ">key=#{key},</if>
+            <if test="value != null ">value=#{value},</if>
+            <if test="createTime != null ">createTime=#{createTime},</if>
+            <if test="updateTime != null ">updateTime=#{updateTime},</if>
+        </trim>
+        where id=#{id}
+    </update>
+
+
+</mapper>
