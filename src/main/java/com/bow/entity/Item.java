@@ -6,67 +6,78 @@ package com.bow.entity;
  */
 public class Item {
 
-	private String appId;
-	private String namespace;
-	private String key;
-	private String value;
-	private String comment;
-	private String createTime;
-	private String updateTime;
+    private String appId;
 
-	public String getAppId() {
-		return appId;
-	}
+    private String namespace;
 
-	public void setAppId(String appId) {
-		this.appId = appId;
-	}
+    private String key;
 
-	public String getNamespace() {
-		return namespace;
-	}
+    private String value;
 
-	public void setNamespace(String namespace) {
-		this.namespace = namespace;
-	}
+    private String comment;
 
-	public String getKey() {
-		return key;
-	}
+    private String createTime;
 
-	public void setKey(String key) {
-		this.key = key;
-	}
+    private String updateTime;
 
-	public String getValue() {
-		return value;
-	}
+    public String getAppId() {
+        return appId;
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
 
-	public String getComment() {
-		return comment;
-	}
+    public String getNamespace() {
+        return namespace;
+    }
 
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
+    }
 
-	public String getCreateTime() {
-		return createTime;
-	}
+    public String getKey() {
+        return key;
+    }
 
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
-	}
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-	public String getUpdateTime() {
-		return updateTime;
-	}
+    public String getValue() {
+        return value;
+    }
 
-	public void setUpdateTime(String updateTime) {
-		this.updateTime = updateTime;
-	}
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return key + "=" + value;
+    }
 }
